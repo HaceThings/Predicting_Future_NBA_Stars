@@ -12,15 +12,28 @@ page = uReq(quote_page)
 page_soup = soup(page.read(), 'html.parser')
 page.close()
 
-stats = ['player', 'draft_year', 'round', 'pick_overall']
+players = {}
+
+stats = ['player', 'rank', 'draft_year', 'round', 'pick_overall']
 
 # Take out the <div> of name and get its value
 table = page_soup.find_all(name="table")
 table_body = table[0].find_all("tbody")
 table_rows = table_body[0].find_all("tr")
-for row in table:
-    cell = table[0].find("td", {"data-stat": stats})
+
+for row in table_rows:
+    # TODO: How do I want to structure my data? Nested dictionaries? Nested lists? Definitely use pandas once it is collected.
+    for stat in stats:
+        a[stat] = (row.find("td", {"data-stat": stat}))
+    # Strips the leading and trailing characters
     name = name.text.strip().encode()
+
+    # Decodes the string using the codec registered for encoding
     name = name.decode("utf-8")
 
-players = table_body.findAll("tr", {"data-stat", "player"})
+    # Parse for (college)
+    if "(college)" in text:
+        length = len(text)
+        text = text[0:length-9]
+        print(text)
+    players[]
